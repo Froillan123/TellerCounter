@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kim's Customer Supprt</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">   
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div id="head"></div>
+    <header class="header" id="header">
+        <a href="index.html" class="logo" ><i class='bx bxs-bank'></i>Kim's Customer Support</a>
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <nav class="navbar">
+            <a href="#home">Customer Service</a>
+            <a href="#">View Customer</a>
+            <a href="#">Counters</a>
+        </nav>
+    </header>
+
+    <section class="priority" id="priority">
+        <div class="prio">
+            <p>Counter 3 Priority Lane: PWD, Senior Citizen , Women With a Child</p>
+        </div>
+    </section>
+
+    <section class="waiting-counters" id="waiting-counters">
+        <div class="counters">
+            <h3>Counter 1</h3>
+
+            <p>Current Customer</p>
+            <div class=""></div>
+
+            <p>Waiting</p>
+        </div>
+
+        <div class="counters">
+            <h3>Counter 2</h3>
+
+            <p>Current Customer</p>
+            <div class=""></div>
+
+            <p>Waiting</p>
+        </div>
+
+        <div class="counters">
+            <h3>Counter 3</h3>
+
+            <p>Current Customer</p>
+            <div class=""></div>
+
+            <p>Waiting</p>
+        </div>
+    </section>
+
+    <main>
+
+        <div class="grid-container">
+            <form class="grid-item form">
+            <h2>Enter Customer Information</h2>
+            <div class="input-box">   
+                <h3>Enter Your name</h3>
+                <input type="text" name="name" placeholder="Name:" id="name" required>
+
+                <h3>Enter Your Age</h3>
+                <input type="number" name="" placeholder="age:" id="age" required>
+
+                <select name="choices"  id="priority-citizen" size="" required >
+                    <option></option>
+                    <option id="priority1">Normal Citizen</option>
+                    <option id="priority2">Women with A child</option>
+                    <option id="priority3">PWD</option>
+                </select>
+
+                <h3>Your Concern</h3>
+                <textarea name="message" id="message" cols="10" rows="10"></textarea>
+
+                <button type="button" class="btn" id="addCustomerBtn" onclick="addCustomer()">Add Customer</button>
+            </form>
+        </div>
+
+        <section class="counter" id="queueSection1">
+            <center><h3 class="heading"><span>Counter 1</span></h3></center>
+            <button class="button" onclick="dequeueCustomer(queue1)">Next Customer</button>
+            <div class="box" id="box1">
+                <h2>Customer 1</h2>
+                <div class="customer-info" id="customerInfo1"></div>
+            </div>
+
+            <div class="box" id="box2">
+                <h2>Customer 2</h2>
+                <div class="customer-info" id="customerInfo2"></div>
+            </div>
+            
+
+            <div class="box" id="box3">
+                <h2>Customer 3</h2>
+                <div class="customer-info" id="customerInfo3"></div>
+        
+            </div>
+
+
+            <div class="box" id="box4">
+                <h2>Customer 4</h2>
+                <div class="customer-info" id="customerInfo4"></div>
+                
+            </div>
+
+
+            <div class="box" id="box5">
+                <h2>Customer 5</h2>
+                <div class="customer-info" id="customerInfo5"></div>
+            
+            </div>
+        </section>
+
+        <section class="counter" id="queueSection2">
+            <center><h3 class="heading"><span>Counter 2</span></h3></center>
+            <button class="button" onclick="dequeueCustomer(queue2)">Next Customer</button>
+            <div class="box" id="box1-1">
+                <h2>Customer 1</h2>
+                <div class="customer-info" id="customerInfo1"></div>
+            </div>
+
+            <div class="box" id="box2-2">
+                <h2>Customer 2</h2>
+                <div class="customer-info" id="customerInfo2"></div>
+            </div>
+            
+
+            <div class="box" id="box3-3">
+                <h2>Customer 3</h2>
+                <div class="customer-info" id="customerInfo3"></div>
+        
+            </div>
+
+
+            <div class="box" id="box4-4">
+                <h2>Customer 4</h2>
+                <div class="customer-info" id="customerInfo4"></div>
+                
+            </div>
+
+
+            <div class="box" id="box5-5">
+                <h2>Customer 5</h2>
+                <div class="customer-info" id="customerInfo5"></div>
+            
+            </div>
+        </section>
+    
+        <section class="counter" id="queueSection3">
+            <center><h3 class="heading"><span>Counter 3</span></h3></center>
+            <button class="button" onclick="dequeueCustomer(queue3)">Next Customer</button>
+
+            <div class="box" id="box1v1">
+                <h2>Customer 1</h2>
+                <div class="customer-info" id="customerInfo1"></div>
+            </div>
+
+            <div class="box" id="box2v2">
+                <h2>Customer 2</h2>
+                <div class="customer-info" id="customerInfo2"></div>
+            </div>
+            
+
+            <div class="box" id="box3v3">
+                <h2>Customer 3</h2>
+                <div class="customer-info" id="customerInfo3"></div>
+        
+            </div>
+
+
+            <div class="box" id="box4v4">
+                <h2>Customer 4</h2>
+                <div class="customer-info" id="customerInfo4"></div>
+                
+            </div>
+
+
+            <div class="box" id="box5v5">
+                <h2>Customer 5</h2>
+                <div class="customer-info" id="customerInfo5"></div>
+            </div>
+        </section>
+
+        </main>
+
+
+
+
+
+        <div class="superMenu">
+            <!-- <div id="close-menu" class="fas fa-times"></div> -->
+            <form id="form" onsubmit="event.preventDefault(); addCustomer();">
+                <h2>Counter Options</h2>
+                <select name="choices"  id="location" size="" required >
+                    <option></option>
+                    <option>Counter 1</option>
+                    <option>Counter 2 </option>
+                    <option>Counter 3 </option>
+                </select>
+                <center><button type="button" class="buttons" onclick="addCustomer()">Proceed To Counter</button></center>
+            </form>
+        </div>
+    
+
+
+
+    
+
+
+    <!-- this is footer -->
+    <footer class="footer">
+        <div class="footer-text">
+            <p>Copyright &copy; 2023 by Kim's Customer Support | All Rights reserved</p>
+            
+        </div>
+        <div class="social-media">
+            <a href="#"><i class='bx bxl-facebook' ></i></a>
+            <a href="#"><i class='bx bxl-twitter' ></i></a>
+            <a href="#"><i class='bx bxl-instagram' ></i></a>
+            <a href="#"><i class='bx bxl-github'></i></a>
+            <a href="#"><i class='bx bxl-linkedin' ></i></a>
+        </div>
+
+        <div class="footer-iconTop">
+            <a href="#head"><i class='bx bx-up-arrow-alt' ></i></a>
+        </div>
+    </footer>
+</body>
+<script src="js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</html>
