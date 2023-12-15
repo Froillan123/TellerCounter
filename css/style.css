@@ -48,7 +48,8 @@ html::-webkit-scrollbar-thumb{
     cursor: pointer;
 }
 
-.header {
+.header 
+{
     position: fixed;
     top: 0;
     left: 0;
@@ -62,7 +63,8 @@ html::-webkit-scrollbar-thumb{
     transition: background 0.3s; /* Add transition for smooth effect */
 }
 
-.header.sticky {
+.header.sticky 
+{
     position: fixed;
     background: var(--bg-color); /* Change the background color when sticky if needed */
     border-bottom: .1rem solid rgba(255, 255, 255, 0.2);
@@ -130,11 +132,6 @@ html::-webkit-scrollbar-thumb{
 }
 
 
-main 
-{
-    display: flex;
-    flex-wrap: wrap;
-}
 .btn {
     padding: 1.5rem 2.8rem;
     background: var(--main-color);
@@ -176,7 +173,7 @@ main
   .grid-item 
   {
     flex: 1 10%; /* Adjust the width as needed */
-    padding: 20px;
+    padding: 1.9rem;
     border-radius: 10px;
   }
   
@@ -206,7 +203,8 @@ main
     font-weight: 500;
     color: var(--black);
 }
-.superMenu {
+.superMenu 
+{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -217,7 +215,8 @@ main
     height:100%;
     width:100%;
 }
-.superMenu.active{
+.superMenu.active
+{
     right:0;
 }
 
@@ -385,6 +384,14 @@ select
     box-shadow: 0 0 1rem var(--main-color);
     transition: .3s ease;
 }
+@media(max-width: 946px)
+{
+    .btn
+    {
+        font-size: 1.4rem;
+        padding: 1rem;
+    }
+}
 
 
 @media(max-width: 785px)
@@ -423,5 +430,24 @@ select
     .navbar a.active
     {
      width: 0;
+    }
+    .grid-container 
+    {
+        padding: 1rem;
+    }
+    .grid-item 
+    {
+        flex:100%;
+        padding: 0;
+    }
+    .counter
+    {
+        flex: 100%;
+        padding: 0;
+        margin-left: 0;
+    }
+    .counters 
+    {
+        flex: 100%;
     }
 }
