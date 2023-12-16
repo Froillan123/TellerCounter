@@ -1,17 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     let menuIcon = document.querySelector('#menu-icon');
     let navbar = document.querySelector('.navbar');
-    let loginForm = document.querySelector('.superMenu');
-
-    // Queues for each counter
-    let queue1 = [];
-    let queue2 = [];
-    let queue3 = [];
-
-    // Current customer being served by each counter
-    let serving1 = null;
-    let serving2 = null;
-    let serving3 = null;
 
     menuIcon.onclick = () => {
         menuIcon.classList.toggle('bx-x');
@@ -23,124 +12,101 @@ document.addEventListener('DOMContentLoaded', function () {
 
     menuIcon.classList.remove('bx-x');
     navbar.classList.remove('active');
+});
 
-    // Event listener for form submission to add a customer
-    document.getElementById('form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        validateAndAddCustomer();
-    });
 
-    // Event listener for clicking the "Add Customer" button outside the form
-    document.getElementById('addCustomerBtn').onclick = () => {
-        validateAndAddCustomer();
-    };
+let counter1Queue = [];
+let counter2Queue = [];
+let counter3Queue = [];
+// Add more arrays for additional counters if needed
 
-    // Event listener for proceeding to the counter
-    document.getElementById('form').addEventListener('submit', function (event) {
-        event.preventDefault();
-        let selectedCounter = document.getElementById('location').value;
-        proceedToCounter(selectedCounter);
-    });
+// Function to add customer to a specific counter
+function addToCounter(counterId) {
+    // Get form input values
+    let customerName = document.getElementById('name').value;
+    let customerAge = document.getElementById('age').value;
+    let customerMessage = document.getElementById('message').value;
 
-    // Function to validate form inputs and add a customer to the queue
-    function validateAndAddCustomer() {
-        // Get form input values
-        var name = document.getElementById('name').value;
-        var age = document.getElementById('age').value;
-        var priority = document.getElementById('priority-citizen').value;
-        var message = document.getElementById('message').value;
-
-        // Validate form inputs
-        if (name.trim() === '' || age.trim() === '' || priority.trim() === '' || message.trim() === '') {
-            alert('Please fill in all the fields before adding a customer.');
-            return; // Stop execution if any field is empty
-        }
-
-        // Create a customer object
-        var customer = {
-            name: name,
-            age: age,
-            priority: priority,
-            message: message
-        };
-
-        // Choose the appropriate queue based on the selected counter
-        let selectedCounter = document.getElementById('location').value;
-        let currentQueue = getQueueForCounter(selectedCounter);
-
-        // Add the customer to the queue
-        currentQueue.push(customer);
-
-        // Additional code for updating the UI (e.g., showing the customer in a waiting list)
-        // ...
-
-        // Close the menu or perform other actions as needed
-        if (loginForm) {
-            loginForm.classList.add('active');
-        }
+    // Check if the form is filled
+    if (!isFormFilled(customerName, customerAge, customerMessage)) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Fill the form first',
+            text: 'Please enter customer information before proceeding to the counter.'
+        });
+        return;
     }
 
-    // Function to proceed to the selected counter
-    function proceedToCounter(selectedCounter) {
-        let currentQueue = getQueueForCounter(selectedCounter);
-        let currentServing = getServingForCounter(selectedCounter);
-
-        if (currentQueue.length > 0) {
-            // Serve the next customer in the queue
-            let nextCustomer = currentQueue.shift();
-            currentServing = nextCustomer;
-
-            // Additional code for updating the UI (e.g., moving the customer to the counter)
-            // ...
-
-            // Continue serving the customer (e.g., show details on the counter)
-            // ...
-
-            // Update the state of the serving customer
-            setServingForCounter(selectedCounter, currentServing);
-        } else {
-            alert('No customers in the queue for Counter ' + selectedCounter);
-        }
+    // Check if the counter is full
+    if (getCounterQueue(counterId).length >= 5) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Counter Full',
+            text: 'This counter is already at maximum capacity.'
+        });
+        return;
     }
 
-    // Helper function to get the queue for a specific counter
-    function getQueueForCounter(counter) {
-        if (counter === 'Counter 1') {
-            return queue1;
-        } else if (counter === 'Counter 2') {
-            return queue2;
-        } else if (counter === 'Counter 3') {
-            return queue3;
-        } else {
-            console.error('Invalid counter: ' + counter);
+    // Get selected citizen types
+    let citizenTypes = [];
+    document.querySelectorAll('.citizen-checkbox:checked').forEach(checkbox => {
+        citizenTypes.push(checkbox.value);
+    });
+
+    // Create a new box for the customer
+    let newBox = document.createElement('div');
+    newBox.className = 'box';
+    newBox.innerHTML = `<p style="font-size: 1.5rem; font-weight: bold;">Name: ${customerName},<br> Age: ${customerAge},<br> Message: ${customerMessage}, Citizens: ${citizenTypes.join(', ')}</p>`;
+
+    // Append the new box to the corresponding counter
+    document.getElementById(`counter${counterId}Boxes`).appendChild(newBox);
+
+    // Reset the form
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('message').value = '';
+    document.querySelectorAll('.citizen-checkbox:checked').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    // Add the customer to the queue
+    getCounterQueue(counterId).push({
+        name: customerName,
+        age: customerAge,
+        message: customerMessage,
+        citizenTypes: citizenTypes
+    });
+}
+
+// Function to check if the form is filled
+function isFormFilled(name, age, message) {
+    return name.trim() !== '' && age.trim() !== '' && message.trim() !== '';
+}
+
+function getCounterQueue(counterId) {
+    switch (counterId) {
+        case 1:
+            return counter1Queue;
+        case 2:
+            return counter2Queue;
+        case 3:
+            return counter3Queue;
+        // Add more cases for additional counters if needed
+        default:
             return [];
-        }
     }
+}
 
-    // Helper function to get the serving customer for a specific counter
-    function getServingForCounter(counter) {
-        if (counter === 'Counter 1') {
-            return serving1;
-        } else if (counter === 'Counter 2') {
-            return serving2;
-        } else if (counter === 'Counter 3') {
-            return serving3;
-        } else {
-            console.error('Invalid counter: ' + counter);
-            return null;
-        }
-    }
 
-    // Helper function to set the serving customer for a specific counter
-    function setServingForCounter(counter, customer) {
-        if (counter === 'Counter 1') {
-            serving1 = customer;
-        } else if (counter === 'Counter 2') {
-            serving2 = customer;
-        } else if (counter === 'Counter 3') {
-            serving3 = customer;
-        } else {
-            console.error('Invalid counter: ' + counter);
-        }
-    }
+// Function to get the queue for a specific counter
+document.getElementById('toCounter1').addEventListener('click', function () {
+    addToCounter(1);
+});
+
+document.getElementById('toCounter2').addEventListener('click', function () {
+    addToCounter(2);
+});
+
+document.getElementById('toCounter3').addEventListener('click', function () {
+    addToCounter(3);
 });

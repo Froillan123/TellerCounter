@@ -132,15 +132,16 @@ html::-webkit-scrollbar-thumb{
 }
 
 
-.btn {
-    padding: 1.5rem 2.8rem;
+.btn 
+{
+    padding: 1.2rem;
     background: var(--main-color);
-    border-radius: 4rem;
-    font-size: 1.9rem;
+    border-radius: 3rem;
+    font-size: 1.7rem;
     color: var(--second-bg-color);
     letter-spacing: .1rem;
     font-weight: 600;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     cursor: pointer;
     transition: background 0.3s ease, box-shadow 0.3s ease;
     width: 100%;
@@ -152,6 +153,16 @@ html::-webkit-scrollbar-thumb{
 {
     box-shadow: 0 0 1rem var(--main-color);
 }
+
+.buttonCounter
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 3rem;
+}
+
 .button 
 {
     padding: 1.2rem;
@@ -172,7 +183,7 @@ html::-webkit-scrollbar-thumb{
   
   .grid-item 
   {
-    flex: 1 10%; /* Adjust the width as needed */
+    flex: 1 20%; /* Adjust the width as needed */
     padding: 1.9rem;
     border-radius: 10px;
   }
@@ -203,51 +214,43 @@ html::-webkit-scrollbar-thumb{
     font-weight: 500;
     color: var(--black);
 }
-.superMenu 
+
+.priority-citizen 
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    align-items: center;
+    width: 100%;
+    gap: 1rem; /* Add some gap between columns */
+}
+.normal-citizen
 {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background:rgba(255,255,255,.9);
-    position:fixed;
-    top:0; right:-105%;
-    z-index: 10000;
-    height:100%;
-    width:100%;
 }
-.superMenu.active
+.senior
 {
-    right:0;
+    display: flex;
+}
+.women 
+{
+    display: flex;
+}
+.pwd
+{
+    display: flex;
 }
 
-.superMenu form { 
-    background: #0ef;
-    border:var(--border);
-    width: 30%;
-    padding:2rem;
-    box-shadow: var(--box-shadow);
-    border-radius: 2rem;
-    margin:2rem;
-    height:auto;
+input[type="checkbox"]
+{
+    height: 2.5rem;
+    margin-right: 0 auto;
 }
-
-.superMenu form h3{
-    font-size: 2.5rem;
-    text-transform: uppercase;
-    color:var(--black);
-    text-align: center;
+span 
+{
+    color: var(--black);
+    font-size: 1.5rem;
+    width: 100%;
 }
-
-
-
-.superMenu #close-menu{
-    position: absolute;
-    top:1.5rem; right:2.5rem;
-    font-size: 5rem;
-    color:var(--black);
-    cursor: pointer;
-}
-
 .buttons 
 {
     padding: 1rem;
@@ -255,7 +258,6 @@ html::-webkit-scrollbar-thumb{
     margin-top: 2rem;
     cursor: pointer;
     border-radius: .5rem;
-    
 }
 
 
@@ -282,7 +284,7 @@ select
     flex-direction: column;
   }
 
-  .box 
+  .counter1Boxes, .counter2Boxes, .counter3Boxes
   {
     margin-bottom: 5rem; /* Adjust spacing between boxes */
     width: 100%;
@@ -292,11 +294,17 @@ select
     padding: 2rem;
     border-radius: .5rem;
   }
+.box
+{
+    margin-bottom: 5rem; /* Adjust spacing between boxes */
+    width: 100%;
+    background: #ffb07c;
+    height: auto;
+    text-align: center;
+    padding: 2rem;
+    border-radius: .5rem;
+}
 
-  .box:nth-child(1)
-  {
-    border: 2px solid red;
-  }
 
 .form .input-box 
 {
@@ -396,6 +404,9 @@ select
 
 @media(max-width: 785px)
 {
+    .priority-citizen {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
     #menu-icon 
     {
         display: block;
@@ -449,5 +460,20 @@ select
     .counters 
     {
         flex: 100%;
+    }
+}
+
+@media(max-width: 370px)
+{
+    .logo
+    {
+        font-size: 2rem;
+    }
+}
+@media(max-width: 345px)
+{
+    .buttonCounter
+    {
+        flex-wrap: wrap;
     }
 }
