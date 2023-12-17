@@ -91,6 +91,16 @@ function addToCounter(counterId) {
         return;
     }
 
+    // Check for duplicate names across all counters
+    if (isNameDuplicate(customerName)) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Duplicate Name',
+            text: 'A customer with the same name already exists in the queue.'
+        });
+        return;
+    }
+
     // Age-based validation for Senior Citizen
     let seniorCitizenRadio = document.getElementById('senior-citizen');
     if (customerAge < 60 && seniorCitizenRadio.checked) {
@@ -161,6 +171,18 @@ function updateCustomerBoxes(counterId) {
 
 function isFormFilled(name, age, message) {
     return name.trim() !== '' && age > 0 && message.trim() !== '';
+}
+
+function isNameDuplicate(name) {
+    for (let counterId = 1; counterId <= 3; counterId++) {
+        let queue = getCounterQueue(counterId);
+        for (let customer of queue) {
+            if (customer.name === name) {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 function getCounterQueue(counterId) {
