@@ -14,17 +14,51 @@ document.addEventListener('DOMContentLoaded', function () {
     navbar.classList.remove('active');
 });
 
-
 let counter1Queue = [];
 let counter2Queue = [];
 let counter3Queue = [];
+
 // Add more arrays for additional counters if needed
 
-// Function to add customer to a specific counter
+// Update the waiting customer information
+function updateWaitingCustomers(counterId) {
+    let currentCustomerDiv = document.getElementById(`currentCustomer${counterId}`);
+    let waitingCustomerDiv = document.getElementById(`waitingCustomer${counterId}`);
+    let queue = getCounterQueue(counterId);
+
+    // Display current customer
+    if (queue.length > 0) {
+        let currentCustomer = queue[0];
+        currentCustomerDiv.innerHTML = `<p>Priority: ${currentCustomer.priority} <br> Name: ${currentCustomer.name}</p>`;
+    } else {
+        currentCustomerDiv.innerHTML = ''; // No current customer
+    }
+
+    // Display waiting customer
+    if (queue.length > 1) {
+        let waitingCustomer = queue[1];
+        waitingCustomerDiv.innerHTML = `<p>Priority: ${waitingCustomer.priority} <br> Name: ${waitingCustomer.name}</p><br>`; // Add <br> for line break
+    } else {
+        waitingCustomerDiv.innerHTML = ''; // No waiting customer
+    }
+
+    // Check if the queue is updated and if it's a dequeue operation
+    if (queue.length < 2 && waitingCustomerDiv.innerHTML !== '') {
+        // This means a dequeue operation occurred, update the view accordingly
+        handleQueueUpdate(counterId);
+    }
+}
+
+// Call this function whenever the queue is updated
+function handleQueueUpdate(counterId) {
+    updateCustomerBoxes(counterId);
+    updateWaitingCustomers(counterId);
+}
+
 function addToCounter(counterId) {
     // Get form input values
     let customerName = document.getElementById('name').value;
-    let customerAge = document.getElementById('age').value;
+    let customerAge = parseInt(document.getElementById('age').value);
     let customerMessage = document.getElementById('message').value;
 
     // Check if the form is filled
@@ -32,7 +66,17 @@ function addToCounter(counterId) {
         Swal.fire({
             icon: 'warning',
             title: 'Fill the form first',
-            text: 'Please enter customer information before proceeding to the counter.'
+            text: 'Please enter valid customer information before proceeding to the counter.'
+        });
+        return;
+    }
+
+    // Age validation
+    if (customerAge <= 0 || customerAge > 150) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Invalid Age',
+            text: 'Please enter a valid age between 1 and 150.'
         });
         return;
     }
@@ -47,40 +91,76 @@ function addToCounter(counterId) {
         return;
     }
 
-    // Get selected citizen types
-    let citizenTypes = [];
-    document.querySelectorAll('.citizen-checkbox:checked').forEach(checkbox => {
-        citizenTypes.push(checkbox.value);
-    });
+    // Age-based validation for Senior Citizen
+    let seniorCitizenRadio = document.getElementById('senior-citizen');
+    if (customerAge < 60 && seniorCitizenRadio.checked) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Invalid Selection',
+            text: 'Senior Citizen option is only available for customers aged 60 and above.'
+        });
+        return;
+    }
 
-    // Create a new box for the customer
-    let newBox = document.createElement('div');
-    newBox.className = 'box';
-    newBox.innerHTML = `<p style="font-size: 1.5rem; font-weight: bold;">Name: ${customerName},<br> Age: ${customerAge},<br> Message: ${customerMessage}, Citizens: ${citizenTypes.join(', ')}</p>`;
+    // Get selected priority
+    let priority = document.querySelector('input[name="priority"]:checked');
 
-    // Append the new box to the corresponding counter
-    document.getElementById(`counter${counterId}Boxes`).appendChild(newBox);
+    if (!priority) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Select Priority',
+            text: 'Please select the priority for the customer.'
+        });
+        return;
+    }
+
+    // Create a new customer object
+    let newCustomer = {
+        priority: parseInt(priority.value),
+        name: customerName,
+        age: customerAge,
+        message: customerMessage
+    };
+
+    // Insert the new customer into the queue
+    let queue = getCounterQueue(counterId);
+    queue.push(newCustomer);
+
+    // Sort the queue in descending order based on priority
+    queue.sort((a, b) => b.priority - a.priority);
+
+    // Update the customer boxes and waiting customers
+    handleQueueUpdate(counterId);
 
     // Reset the form
     document.getElementById('name').value = '';
     document.getElementById('age').value = '';
     document.getElementById('message').value = '';
-    document.querySelectorAll('.citizen-checkbox:checked').forEach(checkbox => {
-        checkbox.checked = false;
-    });
 
-    // Add the customer to the queue
-    getCounterQueue(counterId).push({
-        name: customerName,
-        age: customerAge,
-        message: customerMessage,
-        citizenTypes: citizenTypes
+    // Reset radio buttons
+    document.querySelectorAll('input[name="priority"]').forEach(radio => {
+        radio.checked = false;
     });
 }
 
-// Function to check if the form is filled
+function updateCustomerBoxes(counterId) {
+    let queue = getCounterQueue(counterId);
+    let counterBoxes = document.getElementById(`counter${counterId}Boxes`);
+
+    // Clear existing boxes
+    counterBoxes.innerHTML = '';
+
+    // Create new boxes for each customer
+    queue.forEach(customer => {
+        let newBox = document.createElement('div');
+        newBox.className = 'box';
+        newBox.innerHTML = `<p style="font-size: 1.5rem; font-weight: bold;">Priority: ${customer.priority},<br> Name: ${customer.name},<br></p>`;
+        counterBoxes.appendChild(newBox);
+    });
+}
+
 function isFormFilled(name, age, message) {
-    return name.trim() !== '' && age.trim() !== '' && message.trim() !== '';
+    return name.trim() !== '' && age > 0 && message.trim() !== '';
 }
 
 function getCounterQueue(counterId) {
@@ -97,8 +177,24 @@ function getCounterQueue(counterId) {
     }
 }
 
+function dequeueCustomer(queue, counterId) {
+    if (queue.length > 0) {
+        let servedCustomer = queue.shift();
+        Swal.fire({
+            icon: 'info',
+            title: 'Customer Served',
+            html: `<p style="font-size: 1.5rem;">Priority: ${servedCustomer.priority},<br> Name: ${servedCustomer.name},<br> Age: ${servedCustomer.age},<br> Message: ${servedCustomer.message}</p>`
+        });
+        handleQueueUpdate(counterId);
+    } else {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Customers',
+            text: 'There are no customers in the queue.'
+        });
+    }
+}
 
-// Function to get the queue for a specific counter
 document.getElementById('toCounter1').addEventListener('click', function () {
     addToCounter(1);
 });
@@ -109,4 +205,16 @@ document.getElementById('toCounter2').addEventListener('click', function () {
 
 document.getElementById('toCounter3').addEventListener('click', function () {
     addToCounter(3);
+});
+
+document.getElementById('queueSection1').addEventListener('click', function () {
+    dequeueCustomer(counter1Queue, 1);
+});
+
+document.getElementById('queueSection2').addEventListener('click', function () {
+    dequeueCustomer(counter2Queue, 2);
+});
+
+document.getElementById('queueSection3').addEventListener('click', function () {
+    dequeueCustomer(counter3Queue, 3);
 });

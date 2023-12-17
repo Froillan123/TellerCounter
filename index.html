@@ -30,7 +30,7 @@
 
     <section class="priority" id="priority">
         <div class="prio">
-            <p>Priority: PWD, Senior Citizen , Women With a Child</p>
+            <p>Priority: PWD No.4,Women With a Child No.3, Senior Citizen No.2, Normal Citizen No.1</p>
         </div>
     </section>
 
@@ -38,28 +38,31 @@
         <div class="counters">
             <h3>Counter 1</h3>
 
-            <p>Current Customer</p>
-            <div class=""></div>
+            <p style="font-weight: bold;">Current Customer:</p>
+            <div id="currentCustomer1"></div> <!--Here is the tracking of current customer in counter 1-->
 
-            <p>Waiting</p>
+            <p style="font-weight: bold;">Waiting:</p>
+            <div id="waitingCustomer1"></div> <!--Here is the tracking of waiting the next in the current customer in counter 1-->
         </div>
 
         <div class="counters">
-            <h3>Counter 2</h3>
+            <h3>Counter 2</h3> 
 
-            <p>Current Customer</p>
-            <div class=""></div>
+            <p style="font-weight: bold;">Current Customer:</p>
+            <div id="currentCustomer2"></div>  <!--Here is the tracking of current customer in counter 2-->
 
-            <p>Waiting</p>
+            <p style="font-weight: bold;">Waiting:</p>
+            <div id="waitingCustomer2"></div>  <!--Here is the tracking of waiting the next in the current customer in counter 2-->
         </div>
 
         <div class="counters">
             <h3>Counter 3</h3>
 
-            <p>Current Customer</p>
-            <div class=""></div>
+            <p style="font-weight: bold;">Current Customer:</p>
+            <div id="currentCustomer3"></div> <!--Here is the tracking of current customer in counter 3-->
 
-            <p>Waiting</p>
+            <p style="font-weight: bold;">Waiting:</p>
+            <div id="waitingCustomer3"></div> <!--Here is the tracking of waiting the next in the current customer in counter 3  -->
         </div>
     </section>
 
@@ -76,16 +79,16 @@
     
                     <div class="priority-citizen">
                         <div class="normal-citizen">
-                            <input type="checkbox" name="normal citizen" value="1" id="normal-citizen"> <span>Normal Citizen</span>
+                            <input type="radio" name="priority" value="1" id="normal-citizen"> <span>Normal Citizen</span>
                         </div>
                         <div class="senior">
-                            <input type="checkbox" name="Senior Citizen" value="2" id="senior-citizen"> <span>Senior Citizen</span>
+                            <input type="radio" name="priority" value="2" id="senior-citizen"> <span>Senior Citizen</span>
                         </div>
                         <div class="women">
-                            <input type="checkbox" name="Women With Child" value="3" id="women-with-child"> <span>Women With Child</span>
+                            <input type="radio" name="priority" value="3" id="women-with-child"> <span>Women With Child</span>
                         </div>
                         <div class="pwd">
-                            <input type="checkbox" name="PWD" value="4" id="pwd"> <span>PWD</span>
+                            <input type="radio" name="priority" value="4" id="pwd"> <span>PWD</span>
                         </div>
                     </div>
     
@@ -100,21 +103,21 @@
     
             <section class="counter" id="queueSection1">
                 <center><h3 class="heading">Counter 1</h3></center>
-                <button class="button" onclick="dequeueCustomer(queue1)">Next Customer</button>
+                <button class="button" onclick="dequeueCustomer(dequeue, 1)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
                 <div id="counter1Boxes"></div>
 
             </section>
     
             <section class="counter" id="queueSection2">
                 <center><h3 class="heading">Counter 2</h3></center>
-                <button class="button" onclick="dequeueCustomer(queue2)">Next Customer</button>
+                <button class="button" onclick="dequeueCustomer(dequeue, 2)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
                  <!-- Counter boxes will be dynamically generated here -->
                  <div id="counter2Boxes"></div>
             </section>
     
             <section class="counter" id="queueSection3">
                 <center><h3 class="heading">Counter 3</h3></center>
-                <button class="button" onclick="dequeueCustomer(queue3)">Next Customer</button>
+                <button class="button" onclick="dequeueCustomer(dequeue, 3)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
                  <!-- Counter boxes will be dynamically generated here -->
                  <div id="counter3Boxes"></div>
             </section>

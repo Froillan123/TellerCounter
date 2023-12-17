@@ -130,6 +130,14 @@ html::-webkit-scrollbar-thumb{
     text-align: center;
     line-height: 2;
 }
+.counters h3
+{
+    font-size: 2rem;
+}
+.counters p 
+{
+    font-size: 1.5rem;
+}
 
 
 .btn 
@@ -218,7 +226,7 @@ html::-webkit-scrollbar-thumb{
 .priority-citizen 
 {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(3,1fr);
     align-items: center;
     width: 100%;
     gap: 1rem; /* Add some gap between columns */
@@ -240,7 +248,7 @@ html::-webkit-scrollbar-thumb{
     display: flex;
 }
 
-input[type="checkbox"]
+input[type="radio"]
 {
     height: 2.5rem;
     margin-right: 0 auto;
