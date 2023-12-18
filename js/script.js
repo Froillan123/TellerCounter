@@ -164,7 +164,7 @@ function updateCustomerBoxes(counterId) {
     queue.forEach(customer => {
         let newBox = document.createElement('div');
         newBox.className = 'box';
-        newBox.innerHTML = `<p style="font-size: 1.5rem; font-weight: bold;">Priority: ${customer.priority},<br> Name: ${customer.name},<br></p>`;
+        newBox.innerHTML = `<p style="font-size: 1.5rem; font-weight: bold;" >Priority: ${customer.priority},<br> Name: ${customer.name}<br></p>`;
         counterBoxes.appendChild(newBox);
     });
 }
@@ -240,3 +240,70 @@ document.getElementById('queueSection2').addEventListener('click', function () {
 document.getElementById('queueSection3').addEventListener('click', function () {
     dequeueCustomer(counter3Queue, 3);
 });
+
+
+
+document.getElementById('viewcustomer-link').addEventListener('click', function () {
+    var viewcustomerSection = document.getElementById('viewcustomer');
+    viewcustomerSection.classList.toggle('active');
+});
+
+// Close menu when close button is clicked
+document.getElementById('close-menu').addEventListener('click', function () {
+    var viewcustomerSection = document.getElementById('viewcustomer');
+    viewcustomerSection.classList.remove('active');
+});
+
+
+
+
+
+function updateCustomerTable() {
+    let tableBody = document.getElementById('customers-table-body');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    // Iterate over all customers in all counters and add rows to the table
+    for (let counterId = 1; counterId <= 3; counterId++) {
+        let queue = getCounterQueue(counterId);
+
+        // Sort the queue in descending order based on priority
+        queue.sort((a, b) => b.priority - a.priority);
+
+        queue.forEach((customer, index) => {
+            let priorityText = getPriorityText(customer.priority); // Get the priority text
+
+            let row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${customer.name}</td>
+                <td>${customer.priority}</td>
+                <td>${customer.age}</td>
+                <td>${priorityText}</td>
+                <td>${counterId}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+}
+
+// Helper function to get priority text based on priority value
+function getPriorityText(priority) {
+    switch (priority) {
+        case 1:
+            return 'Normal Citizen';
+        case 2:
+            return 'Senior Citizen';
+        case 3:
+            return 'Women With Child';
+        case 4:
+            return 'PWD';
+        default:
+            return 'Unknown Priority';
+    }
+}
+
+// Call updateCustomerTable whenever the customer queue is updated
+function handleQueueUpdate(counterId) {
+    updateCustomerBoxes(counterId);
+    updateWaitingCustomers(counterId);
+    updateCustomerTable(); // Add this line to update the customer table
+}
