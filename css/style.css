@@ -24,7 +24,7 @@ html
 }
 
 html::-webkit-scrollbar{
-    width: 2em;
+    width: 1.3em;
     height: 1em;
 }
 
