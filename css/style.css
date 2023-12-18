@@ -54,7 +54,7 @@ html::-webkit-scrollbar-thumb{
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem 5%;
+    padding: 1.5rem 5%;
     background: var(--bg-color);
     display: flex;
     justify-content: space-between;
@@ -342,6 +342,79 @@ select
 }
 
 
+
+.viewcustomer
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:rgba(255,255,255,.9);
+    position:fixed;
+    top:0; right:-105%;
+    z-index: 10000;
+    height:100%;
+    width:100%;
+}
+.viewcustomer.active
+{
+    right: 0;
+}
+
+.viewcustomer #close-menu
+{
+    position: absolute;
+    top:1.5rem; right:2.5rem;
+    font-size: 5rem;
+    color:var(--black);
+    cursor: pointer;
+}
+
+.customersview
+{
+    width: 70%;
+}
+.content-table 
+{
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    height: auto;
+    width: 100%;
+}
+
+.content-table thead {
+    background: #009879;
+    color: #fff;
+    text-align: center;
+    font-weight: 600; /* Increase font-weight for better readability */
+}
+
+.content-table th,
+.content-table td {
+    padding: 10px 10px;
+    /* border: 2px solid #000000; */
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #000; /* Use a specific color instead of var(--black) */
+    text-align: center;
+}
+
+.content-table tbody tr{
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879; /* Use a specific color instead of var(--main-color) */
+}
+
+
+
+
+
+
+
 .footer
 {
     display: flex;
@@ -409,6 +482,22 @@ select
     }
 }
 
+@media (max-width: 700px) {
+    .customersview
+    {
+        width: 80%;
+    }
+
+    .content-table 
+    {
+        font-size: 1.2rem;
+    }
+    .content-table th,
+    .content-table td {
+        padding: 8px 8px;
+    }
+    
+}
 
 @media(max-width: 785px)
 {
@@ -483,5 +572,9 @@ select
     .buttonCounter
     {
         flex-wrap: wrap;
+    }
+    .customersview
+    {
+        width: 100%;
     }
 }
