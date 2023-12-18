@@ -23,7 +23,7 @@
         <i class='bx bx-menu' id="menu-icon"></i>
         <nav class="navbar">
             <a href="#message">Customer Service</a>
-            <a href="#">View Customer</a>
+            <a href="#" id="viewcustomer-link">View Customer</a>
             <a href="#">Counters</a>
         </nav>
     </header>
@@ -103,25 +103,50 @@
     
             <section class="counter" id="queueSection1">
                 <center><h3 class="heading">Counter 1</h3></center>
-                <button class="button" onclick="dequeueCustomer(dequeue, 1)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
+                <button class="button" >Next Customer</button> 
+                 <!-- Counter boxes will be dynamically generated here -->
                 <div id="counter1Boxes"></div>
-
             </section>
     
             <section class="counter" id="queueSection2">
                 <center><h3 class="heading">Counter 2</h3></center>
-                <button class="button" onclick="dequeueCustomer(dequeue, 2)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
+                <button class="button">Next Customer</button> 
                  <!-- Counter boxes will be dynamically generated here -->
                  <div id="counter2Boxes"></div>
             </section>
     
             <section class="counter" id="queueSection3">
                 <center><h3 class="heading">Counter 3</h3></center>
-                <button class="button" onclick="dequeueCustomer(dequeue, 3)">Next Customer</button> <!---This is to prevent dequeue 2 times because I called the dequeue in the main container but it still works-->
+                <button class="button">Next Customer</button> 
                  <!-- Counter boxes will be dynamically generated here -->
                  <div id="counter3Boxes"></div>
             </section>
     </main>
+
+
+
+
+
+    
+    <section class="viewcustomer" id="viewcustomer">
+        <div id="close-menu" class="fas fa-times"></div>
+        <div class="customersview">
+            <table class="content-table" id="customers-table">
+                <thead>
+                    <tr>
+                        <th>Name Of Customer</th>
+                        <th>Prio No.</th>
+                        <th>Age</th>
+                        <th>Citizen</th>
+                        <th>Counter</th>
+                    </tr>
+                </thead>
+                <tbody id="customers-table-body">
+                    <!-- Customer rows will be dynamically generated here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
     
     
 
